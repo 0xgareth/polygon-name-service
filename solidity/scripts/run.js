@@ -9,8 +9,12 @@ const main = async () => {
     const txn = await domainContract.register("doom");
     await txn.wait();
 
-    const domainOwner = await domainContract.getAddress("doom");
-    console.log("Owner of domain:", domainOwner);
+    const domainAddress = await domainContract.getAddress("doom");
+    console.log("Owner of domain doom:", domainAddress);
+
+    // try to set a record that doesn't belong to address
+    txn = await domainContract.connect(randomPerson).setRecord("doom", "haha my domain now!");
+    await txn.wait();
 };
   
 const runMain = async () => {
